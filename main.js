@@ -1,1 +1,1 @@
-console.log('dddd');
+const { program } = require('commander');

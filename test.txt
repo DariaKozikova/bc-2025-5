@@ -1,0 +1,36 @@
+curl -X PUT http://localhost:3000/200 --data-binary "@test.jpg"
+
+curl http://localhost:3000/200 -o received.jpg
+
+curl -X DELETE http://localhost:3000/200
+
+curl -i http://localhost:3000/200
+
+curl -X POST http://localhost:3000/200
+
+
+ASUS@Darina MINGW64 ~/bc-2025-5 (main)
+$ curl -X PUT http://localhost:3000/200 --data-binary "@test.jpg"
+201 Created: зображення збережено
+ASUS@Darina MINGW64 ~/bc-2025-5 (main)
+$ curl http://localhost:3000/200 -o received.jpg
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  4085    0  4085    0     0   498k      0 --:--:-- --:--:-- --:--:--  569k
+
+ASUS@Darina MINGW64 ~/bc-2025-5 (main)
+$ curl -X DELETE http://localhost:3000/200
+200 OK: зображення видалено
+ASUS@Darina MINGW64 ~/bc-2025-5 (main)
+$ curl -i http://localhost:3000/200
+HTTP/1.1 404 Not Found
+Content-Type: text/plain; charset=utf-8
+Date: Sat, 01 Nov 2025 13:17:29 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+404 Not Found: зображення не знайдено
+ASUS@Darina MINGW64 ~/bc-2025-5 (main)
+$ curl -X POST http://localhost:3000/200
+405 Method Not Allowed

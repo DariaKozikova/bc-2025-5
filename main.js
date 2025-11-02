@@ -40,7 +40,7 @@ const server = http.createServer(async (req, res) => {
         res.end(imageBuffer);
       } catch {
         res.writeHead(404);
-        res.end('404');
+        res.end('404, Not Found');
       }
     }
 
@@ -51,22 +51,22 @@ const server = http.createServer(async (req, res) => {
       const body = Buffer.concat(chunks);
       await fs.promises.writeFile(filePath, body);
       res.writeHead(201);
-      res.end('201');
+      res.end('201, Created');
     });
 
   } else if (req.method === 'DELETE') {
     try {
       await fs.promises.unlink(filePath);
       res.writeHead(200);
-      res.end('200 OK');
+      res.end('200 OK, Created');
     } catch {
       res.writeHead(404);
-      res.end('404');
+      res.end('404, Not Found');
     }
 
   } else {
     res.writeHead(405);
-    res.end('405');
+    res.end('405, Method not allowed');
   }
 });
 

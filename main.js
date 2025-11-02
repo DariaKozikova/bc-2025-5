@@ -33,13 +33,16 @@ const server = http.createServer(async (req, res) => {
       res.end(data);
     } catch {
       try {
-        const response = await superagent.get(`https://http.cat/${code}`);
-        const imageBuffer = response.body;
-        await fs.promises.writeFile(filePath, imageBuffer);
+        const response = await superagent
+          .get(`https://http.cat/${code}.jpg`)
+          .buffer(true); 
+
+        const imageData = response.body;
+        await fs.promises.writeFile(filePath, imageData);
         res.writeHead(200, { 'Content-Type': 'image/jpeg' });
-        res.end(imageBuffer);
+        res.end(imageData);
       } catch {
-        res.writeHead(404);
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('404, Not Found');
       }
     }
@@ -50,22 +53,22 @@ const server = http.createServer(async (req, res) => {
     req.on('end', async () => {
       const body = Buffer.concat(chunks);
       await fs.promises.writeFile(filePath, body);
-      res.writeHead(201);
+      res.writeHead(201, { 'Content-Type': 'text/plain' });
       res.end('201, Created');
     });
 
   } else if (req.method === 'DELETE') {
     try {
       await fs.promises.unlink(filePath);
-      res.writeHead(200);
-      res.end('200 OK, Created');
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.end('200 OK, Deleted');
     } catch {
-      res.writeHead(404);
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
       res.end('404, Not Found');
     }
 
   } else {
-    res.writeHead(405);
+    res.writeHead(405, { 'Content-Type': 'text/plain' });
     res.end('405, Method not allowed');
   }
 });
